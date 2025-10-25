@@ -11,20 +11,41 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('bio')->nullable();
+            $table->string('profile_image')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->string('provider_name')->nullable();
             $table->rememberToken();
-            $table->timestamps();
+
+            $table->timestamp('created_at')->useCurrent();   
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
+        // Schema::create('users', function (Blueprint $table) {
+        //    $table->id();
+        //     $table->string('name');
+        //     $table->string('email')->unique();
+        //     $table->timestamp('email_verified_at')->nullable();
+        //     $table->string('password');
+        //     $table->text('bio')->nullable();
+        //     $table->string('profile_image')->nullable();
+        //     $table->string('provider_id')->nullable()->after('id');
+        //     $table->string('provider_name')->nullable()->after('provider_id');
+        //     $table->rememberToken();
+        //     $table->timestamp('created_at')->useCurrent();   
+        //     $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        // });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamp('created_at')->useCurrent();   
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
